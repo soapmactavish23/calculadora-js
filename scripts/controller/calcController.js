@@ -7,13 +7,33 @@ class CalcController {
         this._dateEl = document.querySelector("#data");
         this._timeEl = document.querySelector("#hora");
         this.initialize();
+        this.initButtonEvents();
     }
 
     initialize() {
         setInterval(() => {
-            this.displayDate = this.currentDate.toLocaleDateString('pt-BR');
-            this.displayTime = this.currentDate.toLocaleTimeString('pt-BR');
+            this.setDisplayDateTime();
         }, 1000)
+    }
+
+    initButtonEvents() {
+        let buttons = document.querySelectorAll('#buttons > g, #parts > g');
+
+        buttons.forEach((btn, index) => {
+            btn.addEventListener('click', event => {
+                console.log(btn.className.baseVal.replace("btn-", ""));
+            });
+        });
+
+    }
+
+    setDisplayDateTime() {
+        this.displayDate = this.currentDate.toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric',
+        });
+        this.displayTime = this.currentDate.toLocaleTimeString('pt-BR');
     }
 
     get displayTime() {
